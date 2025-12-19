@@ -4,6 +4,10 @@
   justify-content: center;
   margin: 0;
 }
+.App {
+  width: 100%;
+  padding: 20px;
+}
 
 /* InputContainer*/
 
@@ -49,13 +53,21 @@
   margin: 0;
 }
 
-/*ForecastCard*/
-
 .ForecastList li {
   border-radius: 10px;
   padding: 10px;
-  background-color: rgb(83, 160, 231);
-  color: white;
+
+  color: black;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/*CurrentWeather*/
+.CurrentWeather {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.feelings {
+  display: flex;
+  justify-content: space-between;
 }
 
 @media (min-width: 1024px) {

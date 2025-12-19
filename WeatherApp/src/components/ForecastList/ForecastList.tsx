@@ -9,6 +9,9 @@ type DailyForecast = {
   date: string;
   minTemp: number;
   maxTemp: number;
+  avgHumidity: number;
+  avgWind: number;
+  icon: string;
 };
 
 const groupedByDay = (list: WeatherItem[]): DailyForecast[] => {
@@ -23,15 +26,22 @@ const groupedByDay = (list: WeatherItem[]): DailyForecast[] => {
     map.get(date)!.push(item);
   });
 
-  return Array.from(map.entries()).map(([date, items]) => {
-    const temps = items.map((i) => i.main.temp);
+  return Array.from(map.entries())
+    .slice(0, 5)
+    .map(([date, items]) => {
+      const temps = items.map((i) => i.main.temp);
+      const humidities = items.map((i) => i.main.humidity);
+      const winds = items.map((i) => i.wind.speed);
 
-    return {
-      date,
-      minTemp: Math.min(...temps),
-      maxTemp: Math.max(...temps),
-    };
-  });
+      return {
+        date,
+        minTemp: Math.min(...temps),
+        maxTemp: Math.max(...temps),
+        avgHumidity: Math.round(humidities.reduce((a, b) => a + b, 0)),
+        avgWind: Math.round(winds.reduce((a, b) => a + b, 0)),
+        icon: items[0].weather[0].icon,
+      };
+    });
 };
 export const ForecastList = ({ list }: ForecastListProps) => {
   const dailyForecast = groupedByDay(list);
@@ -44,6 +54,9 @@ export const ForecastList = ({ list }: ForecastListProps) => {
             date={day.date}
             minTemp={day.minTemp}
             maxTemp={day.maxTemp}
+            humidity={day.avgHumidity}
+            wind={day.avgWind}
+            icon={day.icon}
           />
         </li>
       ))}

@@ -5,8 +5,12 @@ export interface WeatherItem {
     temp: number;
     temp_min: number;
     temp_max: number;
+    humidity: number;
   };
-  weather: [main: string, icon: string, description: string];
+  weather: { main: string; icon: string; description: string }[];
+  wind: {
+    speed: number;
+  };
 }
 
 export interface WeatherResponse {

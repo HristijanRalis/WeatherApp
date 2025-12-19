@@ -4,6 +4,18 @@ import { Searchbar } from "./components/SearchBar/Searchbar";
 import type { WeatherResponse } from "./types/weather";
 import { fetchWeatherByCity } from "./services/weatherApi";
 import { ForecastList } from "./components/ForecastList/ForecastList";
+import { CurrentWeather } from "./components/CurrentWeatherComponent/CurrentWeather";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+
+
+
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>
+);
 
 function App() {
   const [weather, setWeather] = useState<WeatherResponse | null>(null);
@@ -22,6 +34,7 @@ function App() {
       setWeather(null);
     }
   };
+
   return (
     <div className="App">
       <h1>Weather for 5 days !</h1>
@@ -35,9 +48,8 @@ function App() {
           <h2>
             {weather.city.name}, {weather.city.country}
           </h2>
-          <ul>
-            <ForecastList list={weather.list} />
-          </ul>
+          <CurrentWeather weather={weather.list[0]} />
+          <ForecastList list={weather.list} />
         </div>
       )}
     </div>
