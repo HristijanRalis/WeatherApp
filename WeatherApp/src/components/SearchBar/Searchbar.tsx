@@ -15,7 +15,7 @@ export const Searchbar = ({ onSearch }: searchBarProps) => {
         onChange={(e) => setCityName(e.target.value)}
       />
 
-      <button onClick={() => onSearch(cityName)} className="searchBtn">
+      <button onClick={() => onSearch(cityName.trim())} className="searchBtn">
         Search
       </button>
     </div>

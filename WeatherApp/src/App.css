@@ -2,11 +2,21 @@
   width: 100%;
   display: flex;
   justify-content: center;
+
   margin: 0;
 }
 .App {
-  width: 100%;
   padding: 20px;
+  position: relative;
+  width: 100%;
+  z-index: 1000;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 0 0 16px 16px;
+}
+
+.App h1 {
+  color: white;
 }
 
 /* InputContainer*/
@@ -59,6 +69,19 @@
 
   color: black;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  transition: 0.5s ease;
+  cursor: pointer;
+}
+
+.ForecastList li:hover {
+  transform: scale(1.1);
+}
+
+/*ForecastCard*/
+.ForecastCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /*CurrentWeather*/
@@ -76,13 +99,34 @@
   }
 }
 @media screen and (max-width: 600px) {
+  .App {
+    background: linear-gradient(
+      to bottom,
+      rgb(43, 168, 198),
+      rgb(255, 255, 255)
+    );
+  }
   .ForecastList {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media screen and (max-width: 426px) {
+  .App {
+    background-color: rgb(43, 168, 198);
+    height: 50vh;
+  }
   .ForecastList {
     grid-template-columns: repeat(1, 1fr);
+  }
+
+  .ForecastList li {
+    border-radius: 10px;
+    padding: 10px;
+    border-bottom: 1px solid gray;
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transition: 0.5s ease;
+    cursor: pointer;
   }
 }

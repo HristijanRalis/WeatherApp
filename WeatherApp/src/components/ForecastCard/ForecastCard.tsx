@@ -1,35 +1,25 @@
 type ForecastCardProps = {
-  date: string;
+  day:string
   minTemp: number;
   maxTemp: number;
-  humidity: number;
-  wind: number;
   icon: string;
 };
 
 export const ForecastCard = ({
-  date,
+  day,
   minTemp,
   maxTemp,
-  humidity,
-  wind,
   icon,
 }: ForecastCardProps) => {
   const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
 
   return (
     <div className="ForecastCard">
-      <p>{date}</p>
+      <p className="day">{day}</p>
       <img src={iconUrl} alt="weather icon" />
       <p>Min: {minTemp}</p>
       <p>Max: {maxTemp}</p>
 
-      <div className="feelings">
-        <p>Humidity: {humidity}</p>
-        <p>
-          <i className="fa-solid fa-wind"></i> {wind}
-        </p>
-      </div>
     </div>
   );
 };

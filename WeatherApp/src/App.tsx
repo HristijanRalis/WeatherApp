@@ -8,8 +8,7 @@ import { CurrentWeather } from "./components/CurrentWeatherComponent/CurrentWeat
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-
-
+import { groupedByDay } from "./utils/weather";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -20,24 +19,24 @@ createRoot(document.getElementById("root")!).render(
 function App() {
   const [weather, setWeather] = useState<WeatherResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [cityName, setCityName] = useState<string | null>(null);
   const handleSearch = async (city: string) => {
     try {
       setError(null);
       const data = await fetchWeatherByCity(city);
       setWeather(data);
-
-      console.log("Weather fetched for city", city);
-      console.log(data);
+      setCityName(city);
     } catch (err) {
       console.log("Error fetching weather:", err);
       setError("City not found or API key issue!");
       setWeather(null);
+      setCityName(null);
     }
   };
 
   return (
     <div className="App">
-      <h1>Weather for 5 days !</h1>
+      <h1>Weather for 5 days!</h1>
       {/* Search Bar */}
       <Searchbar onSearch={handleSearch} />
 
@@ -45,11 +44,9 @@ function App() {
 
       {weather && (
         <div>
-          <h2>
-            {weather.city.name}, {weather.city.country}
-          </h2>
-          <CurrentWeather weather={weather.list[0]} />
-          <ForecastList list={weather.list} />
+          <h2>{cityName}</h2>
+          <CurrentWeather weather={weather.current} />
+          <ForecastList daily={groupedByDay(weather.daily)} />
         </div>
       )}
     </div>

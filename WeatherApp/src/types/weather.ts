@@ -1,22 +1,43 @@
-export interface WeatherItem {
+export interface DailyWeather {
   dt: number;
-  dt_txt: string;
-  main: {
-    temp: number;
-    temp_min: number;
-    temp_max: number;
-    humidity: number;
+  temp: {
+    min: number;
+    max: number;
+    day: number;
+    night: number;
+    eve: number;
+    morn: number;
   };
-  weather: { main: string; icon: string; description: string }[];
-  wind: {
-    speed: number;
-  };
+  humidity: number;
+  wind_speed: number;
+  weather: {
+    id: number;
+    main: string;
+    description: string;
+    icon: string;
+  }[];
 }
 
 export interface WeatherResponse {
-  list: WeatherItem[];
-  city: {
-    name: string;
-    country: string;
-  };
+  lat: number;
+  long: number;
+  timezone: string;
+  timezone_offset: number;
+  daily: DailyWeather[];
+  current: CurrentWeather;
+}
+
+export interface WeatherDesc {
+  id: number;
+  main: string;
+  description: string;
+  icon: string;
+}
+
+export interface CurrentWeather {
+  dt: number;
+  temp: number;
+  humidity: number;
+  wind_speed: number;
+  weather: WeatherDesc[];
 }
