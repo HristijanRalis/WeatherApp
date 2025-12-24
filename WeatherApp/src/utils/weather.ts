@@ -1,21 +1,32 @@
 import type { DailyForecast } from "../types/ui";
-import type { WeatherResponse } from "../types/weather";
+import type { WeatherItem, WeatherResponse } from "../types/weather";
 
 const getWeekDay = (date: string) =>
   new Date(date).toLocaleDateString("en-US", { weekday: "short" });
 
-export const groupedByDay = (daily: WeatherResponse["daily"]): DailyForecast[] => {
-  return daily.map((item) => {
-    const date = new Date(item.dt * 1000).toISOString().split("T")[0]; 
+export const groupedByDay = (list: WeatherItem[]): DailyForecast[] => {
+  const map = new Map<string, WeatherItem[]>();
+
+  list.forEach((item) => {
+    const date = item.dt_txt.split(" ")[0];
+    if (!map.has(date)) map.set(date, []);
+    map.get(date)!.push(item);
+  });
+  return Array.from(map.entries()).map(([date, items]) => {
+    const temps = items.map((i) => i.main.temp);
 
     return {
       date,
-      day: getWeekDay(date), 
-      minTemp: item.temp.min,
-      maxTemp: item.temp.max,
-      avgHumidity: item.humidity,
-      avgWind: Math.round(item.wind_speed),
-      icon: item.weather[0].icon,
+      day: getWeekDay(date),
+      minTemp: Math.round(Math.min(...temps)),
+      maxTemp: Math.round(Math.max(...temps)),
+      avgHumidity: Math.round(
+        items.reduce((s, i) => s + i.main.humidity, 0) / items.length
+      ),
+      avgWind: Math.round(
+        items.reduce((s, i) => s + i.wind.speed, 0) / items.length
+      ),
+      icon: items[0].weather[0].icon,
     };
   });
 };

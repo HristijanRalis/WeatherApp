@@ -6,18 +6,21 @@ type ForecastListProps = {
 
 export const ForecastList = ({ daily }: ForecastListProps) => {
   return (
-    <ul className="ForecastList">
-      {daily.map((day) => (
-        <li key={day.day}>
-          <ForecastCard
-            key={day.day}
-            day={day.day}
-            minTemp={day.minTemp}
-            maxTemp={day.maxTemp}
-            icon={day.icon}
-          />
-        </li>
-      ))}
-    </ul>
+    <>
+      <h1>Weather for 5 days!</h1>
+      <ul className="ForecastList">
+        {daily.map((day) => (
+          <li key={day.day}>
+            <ForecastCard
+              key={day.day}
+              day={day.day}
+              minTemp={day.minTemp}
+              maxTemp={day.maxTemp}
+              icon={day.icon}
+            />
+          </li>
+        ))}
+      </ul>
+    </>
   );
 };

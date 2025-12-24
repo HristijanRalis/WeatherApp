@@ -1,132 +1,196 @@
+/* Root & App */
 #root {
   width: 100%;
   display: flex;
   justify-content: center;
-
   margin: 0;
 }
+
 .App {
-  padding: 20px;
-  position: relative;
-  width: 100%;
-  z-index: 1000;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 0 0 16px 16px;
-}
-
-.App h1 {
-  color: white;
-}
-
-/* InputContainer*/
-
-.InputContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
   width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(to bottom, rgb(5, 47, 71), rgb(43, 168, 198));
+  border-radius: 0 0 16px 16px;
+  color: white;
+}
+
+.App h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Search Box */
+.searchBox {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(43, 168, 198);
+
+  box-shadow: 0 8px 15px rgba(43, 168, 198, 0.6);
+  border-radius: 15px 15px 0 0;
+  padding: 20px;
+  margin-bottom: 40px;
+  transition: 0.3s ease;
+}
+
+/* Input */
+.InputContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 15px;
 }
 
 .InputContainer input {
   width: 100%;
-  padding: 10px 20px;
+  padding: 12px 20px;
   border-radius: 25px;
   border: none;
-  margin-block: 20px;
+  font-size: 1rem;
 }
 
 .searchBtn {
   width: 100%;
-  padding: 10px 20px;
-  border: none;
+  padding: 12px 20px;
   border-radius: 25px;
-  color: rgb(255, 255, 255);
-  font-size: 20px;
+  border: none;
+  font-size: 1.2rem;
   cursor: pointer;
-  transition: 0.5s ease;
-  background-color: rgb(83, 160, 231);
+  background-color: rgb(5, 47, 71);
+  color: white;
+  transition: 0.3s ease;
 }
 
 .searchBtn:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
+  background-color: rgb(30, 70, 120);
 }
 
-/*ForecastList*/
+/* Weather Description */
+.WeatherDescription {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
 
+/* Forecast List */
 .ForecastList {
-  list-style-type: none;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 10px;
+  gap: 15px;
+  width: 100%;
   padding: 0;
   margin: 0;
+  list-style: none;
 }
 
 .ForecastList li {
-  border-radius: 10px;
-  padding: 10px;
-
-  color: black;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  transition: 0.5s ease;
-  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 15px;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 15px rgba(43, 168, 198, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .ForecastList li:hover {
-  transform: scale(1.1);
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(43, 168, 198, 0.5);
 }
 
-/*ForecastCard*/
+/* Forecast Card */
 .ForecastCard {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  gap: 10px;
 }
 
-/*CurrentWeather*/
+/* Current Weather */
 .CurrentWeather {
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  padding: 20px;
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 15px rgba(43, 168, 198, 0.4);
+  margin-bottom: 20px;
 }
+
+.CurrentWeather h3 {
+  font-size: 3rem;
+}
+
+.CurrentWeather img {
+  width: 180px;
+  height: 180px;
+  margin: 10px 0;
+}
+
 .feelings {
   display: flex;
+  width: 50%;
   justify-content: space-between;
 }
 
+/* Responsive */
 @media (min-width: 1024px) {
   .ForecastList {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .ForecastList li {
+    flex-direction: column;
   }
 }
-@media screen and (max-width: 600px) {
+
+@media (max-width: 600px) {
   .App {
-    background: linear-gradient(
-      to bottom,
-      rgb(43, 168, 198),
-      rgb(255, 255, 255)
-    );
+    padding: 0;
   }
   .ForecastList {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .CurrentWeather {
+    width: 100%;
+  }
+
+  .searchBox {
+    border-radius: 0 0 25px 25px;
+  }
+
+  .WeatherDescription {
+    padding: 10px;
+  }
+  .feelings {
+    width: 100%;
+  }
 }
 
-@media screen and (max-width: 426px) {
-  .App {
-    background-color: rgb(43, 168, 198);
-    height: 50vh;
-  }
+@media (max-width: 426px) {
   .ForecastList {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: 1fr;
   }
 
   .ForecastList li {
-    border-radius: 10px;
-    padding: 10px;
-    border-bottom: 1px solid gray;
-    color: white;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    transition: 0.5s ease;
-    cursor: pointer;
+    flex-direction: row;
+    justify-content: space-between;
   }
 }

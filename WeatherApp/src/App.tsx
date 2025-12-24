@@ -5,48 +5,45 @@ import type { WeatherResponse } from "./types/weather";
 import { fetchWeatherByCity } from "./services/weatherApi";
 import { ForecastList } from "./components/ForecastList/ForecastList";
 import { CurrentWeather } from "./components/CurrentWeatherComponent/CurrentWeather";
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
 import "./index.css";
 import { groupedByDay } from "./utils/weather";
-
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
 
 function App() {
   const [weather, setWeather] = useState<WeatherResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [cityName, setCityName] = useState<string | null>(null);
+
   const handleSearch = async (city: string) => {
     try {
       setError(null);
       const data = await fetchWeatherByCity(city);
       setWeather(data);
-      setCityName(city);
     } catch (err) {
       console.log("Error fetching weather:", err);
       setError("City not found or API key issue!");
       setWeather(null);
-      setCityName(null);
     }
   };
 
   return (
     <div className="App">
-      <h1>Weather for 5 days!</h1>
-      {/* Search Bar */}
-      <Searchbar onSearch={handleSearch} />
+      {/* Search Box */}
+      <div className="searchBox">
+        <Searchbar onSearch={handleSearch} />
+        {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
+      </div>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {/* Current Weather */}
+      {weather && <CurrentWeather weather={weather.list[0]} />}
 
+      {/* Forecast */}
       {weather && (
-        <div>
-          <h2>{cityName}</h2>
-          <CurrentWeather weather={weather.current} />
-          <ForecastList daily={groupedByDay(weather.daily)} />
+        <div className="WeatherDescription">
+          <div className="Title">
+            <h2>
+              {weather.city.name} - {weather.city.country}
+            </h2>
+          </div>
+          <ForecastList daily={groupedByDay(weather.list)} />
         </div>
       )}
     </div>

@@ -1,5 +1,5 @@
 type ForecastCardProps = {
-  day:string
+  day: string;
   minTemp: number;
   maxTemp: number;
   icon: string;
@@ -11,15 +11,19 @@ export const ForecastCard = ({
   maxTemp,
   icon,
 }: ForecastCardProps) => {
-  const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+  const iconUrl = `https://openweathermap.org/img/wn/${icon.replace(
+    "n",
+    "d"
+  )}@2x.png`;
 
   return (
     <div className="ForecastCard">
       <p className="day">{day}</p>
       <img src={iconUrl} alt="weather icon" />
-      <p>Min: {minTemp}</p>
-      <p>Max: {maxTemp}</p>
-
+      <p>
+        {" "}
+        {minTemp}°C / {maxTemp}°C
+      </p>
     </div>
   );
 };
