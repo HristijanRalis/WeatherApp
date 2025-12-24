@@ -1,5 +1,5 @@
 import type { DailyForecast } from "../types/ui";
-import type { WeatherItem, WeatherResponse } from "../types/weather";
+import type { WeatherItem} from "../types/weather";
 
 const getWeekDay = (date: string) =>
   new Date(date).toLocaleDateString("en-US", { weekday: "short" });
